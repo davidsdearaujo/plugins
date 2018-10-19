@@ -40,9 +40,9 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
     try {
       if (data.size() > 0 && data.containsKey("tipo") && data.get("tipo").equals("INTERFONE")) {
 
-          SharedPreferences settings = getApplicationContext().getSharedPreferences("FlutterSharedPreferences", getApplicationContext().MODE_PRIVATE);
+          SharedPreferences settings = getApplicationContext().getSharedPreferences("Interfone", getApplicationContext().MODE_PRIVATE);
           SharedPreferences.Editor editor = settings.edit();
-          editor.putString("flutter.INTERFONE_LIGACAO", "true");
+          editor.putBoolean("INTERFONE_LIGACAO", true);
           editor.apply();
           Log.d("Interfone", "SharedPreferences save");
 

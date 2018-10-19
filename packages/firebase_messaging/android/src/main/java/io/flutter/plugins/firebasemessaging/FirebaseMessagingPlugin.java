@@ -8,9 +8,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
@@ -106,6 +109,9 @@ public class FirebaseMessagingPlugin extends BroadcastReceiver
       String topic = call.arguments();
       FirebaseMessaging.getInstance().unsubscribeFromTopic(topic);
       result.success(null);
+    } else if("isCallReceiver".equals(call.method)) {
+      SharedPreferences settings = registrar.context().getSharedPreferences("Interfone", registrar.context().MODE_PRIVATE);
+      result.success(settings.getBoolean("INTERFONE_LIGACAO", false));
     } else {
       result.notImplemented();
     }

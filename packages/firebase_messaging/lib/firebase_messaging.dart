@@ -96,6 +96,13 @@ class FirebaseMessaging {
     _channel.invokeMethod('unsubscribeFromTopic', topic);
   }
 
+  Future<bool> isCallReceiver() {
+    if (_platform.isIOS) {
+      return Future<bool>.value(false);
+    }
+    return _channel.invokeMethod('isCallReceiver');
+  }
+
   Future<Null> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case "onToken":
