@@ -50,7 +50,7 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
 
         SharedPreferences settings = getApplicationContext().getSharedPreferences("FlutterSharedPreferences", getApplicationContext().MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("INTERFONE_LIGACAO", "true");
+        editor.putString("flutter.INTERFONE_LIGACAO", "true");
         editor.apply();
         Log.d("Interfone", "SharedPreferences save");
 
