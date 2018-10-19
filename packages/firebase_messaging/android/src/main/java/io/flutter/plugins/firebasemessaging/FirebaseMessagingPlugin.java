@@ -111,7 +111,11 @@ public class FirebaseMessagingPlugin extends BroadcastReceiver
       result.success(null);
     } else if("isCallReceiver".equals(call.method)) {
       SharedPreferences settings = registrar.context().getSharedPreferences("Interfone", registrar.context().MODE_PRIVATE);
-      result.success(settings.getBoolean("INTERFONE_LIGACAO", false));
+      boolean isInterfoneLigacao = settings.getBoolean("INTERFONE_LIGACAO", false);
+      result.success(isInterfoneLigacao);
+      SharedPreferences.Editor editor = settings.edit();
+      editor.putBoolean("INTERFONE_LIGACAO", false);
+      editor.apply();
     } else {
       result.notImplemented();
     }
