@@ -37,11 +37,6 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
     Log.d(TAG, "Bundle data: " + data);
     Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-
-    Intent intent = new Intent(ACTION_REMOTE_MESSAGE);
-    intent.putExtra(EXTRA_REMOTE_MESSAGE, remoteMessage);
-    LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-
     try {
       if (data.size() > 0 && data.containsKey("tipo") && data.get("tipo").equals("INTERFONE")) {
         String ns = getApplicationContext().getPackageName();
@@ -69,5 +64,9 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
     } catch (Exception e) {
         Log.w(TAG, "Failed to open application on received call", e);
     }
+
+      Intent intent = new Intent(ACTION_REMOTE_MESSAGE);
+      intent.putExtra(EXTRA_REMOTE_MESSAGE, remoteMessage);
+      LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
   }
 }
