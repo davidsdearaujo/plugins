@@ -39,7 +39,14 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
 
     try {
       if (data.size() > 0 && data.containsKey("tipo") && data.get("tipo").equals("INTERFONE")) {
-        String ns = getApplicationContext().getPackageName();
+
+          SharedPreferences settings = getApplicationContext().getSharedPreferences("FlutterSharedPreferences", getApplicationContext().MODE_PRIVATE);
+          SharedPreferences.Editor editor = settings.edit();
+          editor.putString("flutter.INTERFONE_LIGACAO", "true");
+          editor.apply();
+          Log.d("Interfone", "SharedPreferences save");
+
+          String ns = getApplicationContext().getPackageName();
         String cls = ns + ".MainActivity";
         Intent intentMainApp = new Intent(getApplicationContext(), Class.forName(cls));
         intentMainApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -47,12 +54,6 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
         intentMainApp.addCategory(Intent.CATEGORY_LAUNCHER);
         intentMainApp.putExtra("foreground", true);
         startActivity(intentMainApp);
-
-        SharedPreferences settings = getApplicationContext().getSharedPreferences("FlutterSharedPreferences", getApplicationContext().MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("flutter.INTERFONE_LIGACAO", "true");
-        editor.apply();
-        Log.d("Interfone", "SharedPreferences save");
 
         PowerManager powermanager=  ((PowerManager)getApplicationContext().getSystemService(getApplicationContext().POWER_SERVICE));
         PowerManager.WakeLock wakeLock=powermanager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "tag");
