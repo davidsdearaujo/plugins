@@ -52,6 +52,7 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("INTERFONE_LIGACAO", "true");
         editor.apply();
+        Log.d("Interfone", "SharedPreferences save");
 
         PowerManager powermanager=  ((PowerManager)getApplicationContext().getSystemService(getApplicationContext().POWER_SERVICE));
         PowerManager.WakeLock wakeLock=powermanager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "tag");
