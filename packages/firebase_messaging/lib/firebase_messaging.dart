@@ -96,7 +96,7 @@ class FirebaseMessaging {
     _channel.invokeMethod('unsubscribeFromTopic', topic);
   }
 
-  Future<bool> isCallReceiver() {
+  Future<dynamic> isCallReceiver() {
     if (_platform.isIOS) {
       return Future<bool>.value(false);
     }
