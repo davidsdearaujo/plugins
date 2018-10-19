@@ -5,6 +5,7 @@
 package io.flutter.plugins.firebasemessaging;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.PowerManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -52,13 +53,18 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
         intentMainApp.putExtra("foreground", true);
         startActivity(intentMainApp);
 
-          PowerManager powermanager=  ((PowerManager)getApplicationContext().getSystemService(getApplicationContext().POWER_SERVICE));
-          PowerManager.WakeLock wakeLock=powermanager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "tag");
-          wakeLock.acquire();
-          if(wakeLock.isHeld())
-          {
-              wakeLock.release();
-          }
+        SharedPreferences settings = getApplicationContext().getSharedPreferences("FlutterSharedPreferences", getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("INTERFONE_LIGACAO", "true");
+        editor.apply();
+
+        PowerManager powermanager=  ((PowerManager)getApplicationContext().getSystemService(getApplicationContext().POWER_SERVICE));
+        PowerManager.WakeLock wakeLock=powermanager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "tag");
+        wakeLock.acquire();
+        if(wakeLock.isHeld())
+        {
+           wakeLock.release();
+        }
       }
     } catch (Exception e) {
         Log.w(TAG, "Failed to open application on received call", e);
