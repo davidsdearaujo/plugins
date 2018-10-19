@@ -5,6 +5,7 @@
 package io.flutter.plugins.firebasemessaging;
 
 import android.content.Intent;
+import android.os.PowerManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -50,6 +51,14 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
         intentMainApp.addCategory(Intent.CATEGORY_LAUNCHER);
         intentMainApp.putExtra("foreground", true);
         startActivity(intentMainApp);
+
+          PowerManager powermanager=  ((PowerManager)getApplicationContext().getSystemService(getApplicationContext().POWER_SERVICE));
+          PowerManager.WakeLock wakeLock=powermanager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "tag");
+          wakeLock.acquire();
+          if(wakeLock.isHeld())
+          {
+              wakeLock.release();
+          }
       }
     } catch (Exception e) {
         Log.w(TAG, "Failed to open application on received call", e);
